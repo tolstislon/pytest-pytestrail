@@ -7,7 +7,7 @@ def pytest_addoption(parser):
     parser.addoption('--tr-email', action='store', default=None, help='Email акаунта в TestRail')
     parser.addoption('--tr-password', action='store', default=None, help='Пароль акаунта в TestRail')
     parser.addoption('--tr-test-run', action='store', default=None, help='ID test run')
-    parser.addoption('--tr-no-decorator-skip', action='store', default=False, help='Скипать тесты без декоратора')
+    parser.addoption('--tr-no-decorator-skip', action='store_true', help='Скипать тесты без декоратора')
 
     parser.addini('pytestrail', help='Запуск интеграции с TestRail', type="bool", default=None)
     parser.addini('pytestrail-url', help='Адрес сервера TestRail', default=None)
