@@ -4,6 +4,11 @@
 
 Pytest plugin for interaction with TestRail
 
+### Requirements
+
+* python 3.6+
+* pytest 3.8+
+
 ### Install
 
 ```shell
@@ -31,9 +36,9 @@ def test_two():
 
 `pytest.ini` or `setup.cfg` [pytest configuration](https://docs.pytest.org/en/latest/customize.html)
 
-```
+```ini
 [pytest]
-pytestrail = True
+pytestrail = True  
 pytestrail-url = https://exemle.testrail.com/
 pytestrail-email = exemle@mail.com
 pytestrail-password = password
@@ -45,11 +50,11 @@ or
 
 ##### Command line options
 
-```
---pytestrail
+```shell
+--pytestrail            Enable plugin
 --tr-url=URL            TestRail address
 --tr-email=EMAIL        Email for the account on the TestRail
 --tr-password=PASSWORD  Password for the account on the TestRail
---tr-test-run=12        ID of testrun
---tr-no-decorator-skip
+--tr-test-run=12        ID testrun
+--tr-no-decorator-skip  Skip tests without decorator
 ```

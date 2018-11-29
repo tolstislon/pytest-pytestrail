@@ -58,9 +58,9 @@ Command line options
 
 ::
 
-    --pytestrail
+    --pytestrail            Enable plugin
     --tr-url=URL            TestRail address
     --tr-email=EMAIL        Email for the account on the TestRail
     --tr-password=PASSWORD  Password for the account on the TestRail
-    --tr-test-run=12        ID of testrun
-    --tr-no-decorator-skip
+    --tr-test-run=12        ID testrun
+    --tr-no-decorator-skip  Skip tests without decorator
