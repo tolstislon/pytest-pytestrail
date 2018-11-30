@@ -7,7 +7,7 @@ from testrail_api import TestRailAPI
 
 from ._exception import MissingRequiredParameter
 
-__version__ = '0.0.1a'
+__version__ = '0.0.1'
 
 PYTESTRAIL_MARK = 'pytestrail'
 
@@ -52,7 +52,7 @@ class PyTestRail:
     def pytest_collection_modifyitems(self, session, config, items):
         """"""
         for item in items:
-            ids = [int(re.search('(?P<id>[0-9]+$)', test_id).groupdict().get('id')) for test_id in
+            ids = [int(re.search('(?P<id>[0-9]+$)', test_run_id).groupdict().get('id')) for test_run_id in
                    [a for a in itertools.chain(*[i.args for i in item.iter_markers(PYTESTRAIL_MARK)])]]
 
             if ids:
@@ -61,5 +61,5 @@ class PyTestRail:
                     item.add_marker(mark)
             else:
                 if config.getoption('--tr-no-decorator-skip') or config.getini('pytestrail-no-decorator-skip'):
-                    mark = pytest.mark.skip(f'No {PYTESTRAIL_MARK} decorator')
+                    mark = pytest.mark.skip('Skip tests without decorator')
                     item.add_marker(mark)
