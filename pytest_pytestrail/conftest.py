@@ -19,12 +19,4 @@ def pytest_addoption(parser):
 
 def pytest_configure(config):
     if config.getoption('--pytestrail') or config.getini('pytestrail'):
-        config.pluginmanager.register(
-            PyTestRail(
-                url=config.getoption('--tr-url') or config.getini('pytestrail-url'),
-                email=config.getoption('--tr-email') or config.getini('pytestrail-email'),
-                password=config.getoption('--tr-password') or config.getini('pytestrail-password'),
-                test_run=config.getoption('--tr-test-run') or config.getini('pytestrail-test-run')
-            ),
-            name="pytest-pytestrail-instance"
-        )
+        config.pluginmanager.register(PyTestRail(), name="pytest-pytestrail-instance")
