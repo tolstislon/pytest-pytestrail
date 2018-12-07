@@ -1,5 +1,4 @@
-from .pytestrail_plugin import PytestrailMark as pytestrail
-from .pytestrail_plugin import testrail
+from . import pytestrail
 from ._constants import __version__
 
-__all__ = ['pytestrail', '__version__', 'testrail']
+__all__ = ['pytestrail', '__version__']

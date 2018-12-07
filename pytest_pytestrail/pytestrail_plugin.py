@@ -9,18 +9,6 @@ from . import _constants as constants
 from ._exception import MissingRequiredParameter
 
 
-class PytestrailMark:
-
-    @staticmethod
-    def case(*args):
-        return pytest.mark.pytestrail(*args)
-
-
-def testrail(*args):
-    """Support lib pytest-testrail"""
-    return PytestrailMark.case(*args)
-
-
 def case_ids(item):
     return [int(re.search('(?P<id>[0-9]+$)', test_run_id).groupdict().get('id')) for test_run_id in
             [a for a in itertools.chain(*[i.args for i in item.iter_markers(constants.PYTESTRAIL_MARK)])]]
