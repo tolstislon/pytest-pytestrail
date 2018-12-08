@@ -25,11 +25,11 @@ Example
 
     @pytestrail.case('C12')
     def test_one():
-        # test code
+        ...  # test code
 
     @pytestrail.case('C13', 'C14')
     def test_two():
-        # test code
+        ... # test code
 
 
 
@@ -50,6 +50,7 @@ Config file
     pytestrail-password = password
     pytestrail-test-run = 12
     pytestrail-no-decorator-skip = True
+    pytestrail-report = True
 
 
 or
@@ -64,3 +65,4 @@ Command line options
     --tr-password=PASSWORD  Password for the account on the TestRail
     --tr-test-run=12        ID testrun
     --tr-no-decorator-skip  Skip tests without decorator
+    --tr-report             Enable report

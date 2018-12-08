@@ -1,11 +1,9 @@
-__version__ = '0.1.2'
+__version__ = '0.1.6'
 
 PYTESTRAIL_MARK = 'pytestrail'
 
 STATUS = {
     "passed": 1,
-    "blocked": 2,
-    "untested": 3,
-    "retest": 4,
+    "skipped": 2,
     "failed": 5
 }
