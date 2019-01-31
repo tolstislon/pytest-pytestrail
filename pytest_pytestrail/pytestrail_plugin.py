@@ -46,7 +46,10 @@ def reporter(api, test_run):
                     'comment': data.comment,
                     'elapsed': f'{round(data.elapsed) or 1}s'
                 }
-                api.results.add_result_for_case(**request)
+                try:
+                    api.results.add_result_for_case(**request)
+                except Exception:
+                    pass
         else:
             break
 
