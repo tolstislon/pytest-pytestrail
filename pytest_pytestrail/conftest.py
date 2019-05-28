@@ -20,5 +20,6 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
+    config.addinivalue_line("markers", "pytestrail(*args): Mark test")
     if config.getoption('--pytestrail') or config.getini('pytestrail'):
         config.pluginmanager.register(PyTestRail(), name="pytest-pytestrail-instance")
