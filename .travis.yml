@@ -9,3 +9,5 @@ deploy:
   on:
     tags: true
     repo: tolstislon/pytest-pytestrail
+    branch: master
+    distributions: sdist bdist_wheel
