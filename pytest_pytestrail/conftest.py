@@ -2,13 +2,14 @@ from .pytestrail_plugin import PyTestRail
 
 
 def pytest_addoption(parser):
-    parser.addoption('--pytestrail', action='store_true', help='Enable plugin')
-    parser.addoption('--tr-url', action='store', default=None, help='TestRail address')
-    parser.addoption('--tr-email', action='store', default=None, help='Email for the account on the TestRail')
-    parser.addoption('--tr-password', action='store', default=None, help='Password for the account on the TestRail')
-    parser.addoption('--tr-test-run', action='store', default=None, help='ID testrun')
-    parser.addoption('--tr-no-decorator-skip', action='store_true', help='Skip tests without decorator')
-    parser.addoption('--tr-report', action='store_true', help='Enable report')
+    group = parser.getgroup('TestRail')
+    group.addoption('--pytestrail', action='store_true', help='Enable plugin')
+    group.addoption('--tr-url', action='store', default=None, help='TestRail address')
+    group.addoption('--tr-email', action='store', default=None, help='Email for the account on the TestRail')
+    group.addoption('--tr-password', action='store', default=None, help='Password for the account on the TestRail')
+    group.addoption('--tr-test-run', action='store', default=None, help='ID testrun')
+    group.addoption('--tr-no-decorator-skip', action='store_true', help='Skip tests without decorator')
+    group.addoption('--tr-report', action='store_true', help='Enable report')
 
     parser.addini('pytestrail', help='Enable plugin', type="bool", default=None)
     parser.addini('pytestrail-url', help='TestRail address', default=None)
