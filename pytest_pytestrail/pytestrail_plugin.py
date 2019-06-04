@@ -3,7 +3,6 @@ import re
 import threading
 from queue import Queue
 
-import colorama
 import pytest
 from testrail_api import TestRailAPI
 
@@ -92,8 +91,7 @@ class PyTestRail:
             self.reporter = threading.Thread(target=reporter, args=(self.api, self.test_run))
             self.reporter.start()
 
-        colorama.init(autoreset=True)
-        return f'PyTestRail {constants.__version__}: {colorama.Fore.GREEN}ON{colorama.Fore.RESET}'
+        return f'PyTestRail {constants.__version__}: ON'
 
     @pytest.hookimpl(trylast=True)
     def pytest_collection_modifyitems(self, session, config, items):

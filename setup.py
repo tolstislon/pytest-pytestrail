@@ -13,7 +13,7 @@ setup(
     author_email='tolstislon@gmail.com',
     url='https://github.com/tolstislon/pytest-pytestrail',
     packages=['pytest_pytestrail'],
-    install_requires=['pytest>=3.8.0', 'testrail-api>=1.0.1', 'colorama>=0.4.1'],
+    install_requires=['pytest>=3.8.0', 'testrail-api>=1.0.1'],
     include_package_data=True,
     python_requires='>=3.6',
     license='MIT License',

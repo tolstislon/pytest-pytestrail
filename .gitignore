@@ -103,8 +103,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 .idea/
-Pipfile
-Pipfile.lock
 /pytest_pytestrail/test_one.py
 ewrere.py
 pytest.ini
