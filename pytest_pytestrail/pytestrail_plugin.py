@@ -57,26 +57,28 @@ class PyTestRail:
     api: TestRailAPI
     case_ids: list
 
-    def __init__(self):
-        self.url = self.email = self.password = self.test_run = self.report = self.reporter = None
+    def __init__(self, config):
+        self.url: str = config.getoption('--tr-url') or config.getini('pytestrail-url')
+        self.email: str = config.getoption('--tr-email') or config.getini('pytestrail-email')
+        self.password: str = config.getoption('--tr-password') or config.getini('pytestrail-password')
+        self.test_run = config.getoption('--tr-test-run') or config.getini('pytestrail-test-run')
+        self.report = config.getoption('--tr-report') or config.getini('pytestrail-report')
+        self.no_decorator_skip = config.getoption('--tr-no-decorator-skip') or config.getini(
+            'pytestrail-no-decorator-skip')
+        self.reporter = None
 
-    def pytest_report_header(self, config, startdir):
-        """"""
-        self.url = config.getoption('--tr-url') or config.getini('pytestrail-url')
+    def pytest_report_header(self):
         if self.url is None:
             raise MissingRequiredParameter('url')
 
-        self.email = config.getoption('--tr-email') or config.getini('pytestrail-email')
         if self.email is None:
             raise MissingRequiredParameter('email')
 
-        self.password = config.getoption('--tr-password') or config.getini('pytestrail-password')
         if self.password is None:
             raise MissingRequiredParameter('password')
 
         self.api = TestRailAPI(self.url, self.email, self.password)
 
-        self.test_run = config.getoption('--tr-test-run') or config.getini('pytestrail-test-run')
         if self.test_run is None:
             raise MissingRequiredParameter('test-run')
 
@@ -84,7 +86,6 @@ class PyTestRail:
         self.case_ids = [i['case_id'] for i in response]
 
         # create reporting
-        self.report = config.getoption('--tr-report') or config.getini('pytestrail-report')
         if self.report:
             global REPORTER_QUEUE
             REPORTER_QUEUE = Queue()
@@ -94,21 +95,25 @@ class PyTestRail:
         return f'PyTestRail {constants.__version__}: ON'
 
     @pytest.hookimpl(trylast=True)
-    def pytest_collection_modifyitems(self, session, config, items):
-        """"""
+    def pytest_collection_modifyitems(self, items, config):
+        selected_items = []
+        deselected_items = []
+
         for item in items:
             ids = case_ids(item)
-
-            if ids:
-                if not set(ids) & set(self.case_ids):
-                    item.add_marker(pytest.mark.skip(f'Test absent in testrun {self.test_run}'))
+            if not set(ids) & set(self.case_ids):
+                if self.no_decorator_skip:
+                    deselected_items.append(item)
+                else:
+                    selected_items.append(item)
             else:
-                if config.getoption('--tr-no-decorator-skip') or config.getini('pytestrail-no-decorator-skip'):
-                    item.add_marker(pytest.mark.skip('Skip tests without decorator'))
+                selected_items.append(item)
+
+        config.hook.pytest_deselected(items=deselected_items)
+        items[:] = selected_items
 
     @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-    def pytest_runtest_makereport(self, item, call):
-        """"""
+    def pytest_runtest_makereport(self, item):
         outcome = yield
         rep = outcome.get_result()
 
@@ -123,7 +128,7 @@ class PyTestRail:
                     Report(ids, rep.outcome, rep.longrepr, rep.duration)
                 )
 
-    def pytest_sessionfinish(self, session, exitstatus):
+    def pytest_sessionfinish(self):
         if self.report:
             self.stopped_report()
 

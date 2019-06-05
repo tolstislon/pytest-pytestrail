@@ -8,8 +8,8 @@ def pytest_addoption(parser):
     group.addoption('--tr-email', action='store', default=None, help='Email for the account on the TestRail')
     group.addoption('--tr-password', action='store', default=None, help='Password for the account on the TestRail')
     group.addoption('--tr-test-run', action='store', default=None, help='ID testrun')
-    group.addoption('--tr-no-decorator-skip', action='store_true', help='Skip tests without decorator')
-    group.addoption('--tr-report', action='store_true', help='Enable report')
+    group.addoption('--tr-no-decorator-skip', action='store_true', help='Skip tests without decorator', default=False)
+    group.addoption('--tr-report', action='store_true', help='Enable report', default=False)
 
     parser.addini('pytestrail', help='Enable plugin', type="bool", default=None)
     parser.addini('pytestrail-url', help='TestRail address', default=None)
@@ -23,4 +23,4 @@ def pytest_addoption(parser):
 def pytest_configure(config):
     config.addinivalue_line("markers", "pytestrail(*args): Mark test")
     if config.getoption('--pytestrail') or config.getini('pytestrail'):
-        config.pluginmanager.register(PyTestRail(), name="pytest-pytestrail-instance")
+        config.pluginmanager.register(PyTestRail(config), name="pytest-pytestrail-instance")
