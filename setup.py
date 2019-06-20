@@ -1,13 +1,12 @@
+from m2r import parse_from_file
 from setuptools import setup
-import pytest_pytestrail
 
-with open('readme.rst', 'r') as file:
-    long_description = file.read()
+import pytest_pytestrail
 
 setup(
     name='pytest-pytestrail',
     description='pytest plugin for interaction with TestRail',
-    long_description=long_description,
+    long_description=parse_from_file('README.md'),
     version=pytest_pytestrail.__version__,
     author='tolstislon',
     author_email='tolstislon@gmail.com',
@@ -20,7 +19,7 @@ setup(
     entry_points={'pytest11': ['pytest_pytestrail = pytest_pytestrail.conftest']},
     keywords=['testrail', 'pytest', 'pytest-testrail', 'pytest-pytestrail', 'testrail_api'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
