@@ -24,9 +24,36 @@ from pytest_pytestrail import pytestrail
 def test_one():
     ... # test code
 
-@pytestrail.case('C13', 'C14')
+@pytestrail.case('C13')
 def test_two():
     ... # test code
+```
+
+###### Steps
+```python
+from pytest_pytestrail import pytestrail
+
+case = pytestrail.steps_case('C2')
+
+@case.step(1)
+def test_step_one():
+    assert True
+
+
+@case.step(2)
+def test_step_two():
+    assert True
+```
+
+###### Steps parametrize
+```python
+from pytest_pytestrail import pytestrail
+import pytest
+
+# pytestrail.param(value, case, step)
+@pytest.mark.parametrize('data', [pytestrail.param(1, 'C5', 1), pytestrail.param(2, 'C5', 2)])
+def test_four(data):
+    assert data
 ```
 
 #### Configuration
@@ -38,7 +65,7 @@ def test_two():
 ```ini
 [pytest]
 pytestrail = True  
-pytestrail-url = https://exemle.testrail.com/
+pytestrail-url = https://example.testrail.com
 pytestrail-email = exemle@mail.com
 pytestrail-password = password
 pytestrail-test-run = 12

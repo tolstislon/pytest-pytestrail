@@ -103,6 +103,3 @@ venv.bak/
 # mypy
 .mypy_cache/
 .idea/
-/pytest_pytestrail/test_one.py
-ewrere.py
-pytest.ini
