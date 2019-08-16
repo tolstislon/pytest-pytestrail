@@ -1,4 +1,4 @@
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 PYTESTRAIL_MARK = 'pytestrail'
 PYTESTRAIL_CASE_MARK = 'pytestrail_case'

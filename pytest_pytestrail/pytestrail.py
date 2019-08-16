@@ -1,8 +1,12 @@
-import pytest
+import warnings
 from typing import Any, Optional
 
+import pytest
 
-def case(case_id):
+
+def case(case_id, *args):
+    if args:
+        warnings.warn('case takes only one argument', DeprecationWarning)
     return pytest.mark.pytestrail(case_id)
 
 
