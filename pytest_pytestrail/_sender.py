@@ -2,11 +2,19 @@ import abc
 import threading
 import time
 from queue import Queue
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Union
+
+from _pytest.reports import TestReport
+from requests.exceptions import RequestException
 
 from ._case import Case
 from ._constants import STATUS
-from requests.exceptions import RequestException
+from enum import Enum, auto
+from testrail_api import TestRailAPI
+
+
+class SIGNAL(Enum):
+    STOP = auto()
 
 
 class Report(metaclass=abc.ABCMeta):
@@ -18,7 +26,7 @@ class Report(metaclass=abc.ABCMeta):
 
 class ReportCase(Report):
 
-    def __init__(self, case, report):
+    def __init__(self, case: Case, report: TestReport):
         self.case = case
         self.report = report
 
@@ -33,10 +41,11 @@ class ReportCase(Report):
         return '\n'.join([f'\t{line}' for line in data])
 
     def get_step(self) -> Tuple[dict, float]:
-        return {'content': f'Step {self.case.step}',
-                'status_id': STATUS[self.report.outcome],
-                'actual': self.pars_comment(self.report.longrepr)
-                }, self.report.duration
+        return {
+                   'content': f'Step {self.case.step}',
+                   'status_id': STATUS[self.report.outcome],
+                   'actual': self.pars_comment(self.report.longrepr)
+               }, self.report.duration
 
     def get(self) -> dict:
         return {
@@ -52,7 +61,7 @@ class ReportStep(Report):
     def __init__(self, data: List[ReportCase]):
         self.steps = data
 
-    def get(self):
+    def get(self) -> dict:
         step_results = []
         elapsed = 0
         status_id = STATUS['passed']
@@ -74,50 +83,54 @@ class ReportStep(Report):
 
 class Sender(threading.Thread):
 
-    def __init__(self, api, run_id, **kwargs):
-        self._api = api
-        self.run_id = run_id
-        self._kwargs = {k: v for k, v in kwargs.items() if v}
-        self._queue = Queue()
-        self._steps = {}
-        super().__init__(target=self.worker, args=())
+    def __init__(self, api: TestRailAPI, run_id: int, **kwargs):
+        self.__api = api
+        self.__run_id = run_id
+        self.__kwargs = {k: v for k, v in kwargs.items() if v}
+        self.__queue = Queue()
+        self.__steps = {}
+        super().__init__(target=self.__worker, args=())
 
-    def send(self, case: Case, report):
-        rep = self._create_report(case, report)
+    def send(self, case: Case, report: TestReport) -> None:
+        rep = self.__create_report(case, report)
         if rep is not None:
-            self._queue.put(rep)
+            self.__queue.put(rep)
 
-    def _create_report(self, case: Case, report):
+    def __create_report(self, case: Case, report: TestReport) -> Union[ReportCase, ReportStep, None]:
+        rep = ReportCase(case, report)
         if case.is_step:
-            data = self._steps.setdefault(case.case_id, [])
-            rep = ReportCase(case, report)
+            data = self.__steps.setdefault(case.case_id, [])
             data.append(rep)
             if case.is_last:
                 report_steps = ReportStep(data)
-                del self._steps[case.case_id]
+                del self.__steps[case.case_id]
                 return report_steps
             else:
                 return None
         else:
-            return ReportCase(case, report)
+            return rep
 
-    def worker(self):
+    def __worker(self) -> None:
         while True:
-            data = self._queue.get()
-            if isinstance(data, Report):
+            data = self.__queue.get()
+            if data is SIGNAL.STOP:
+                break
+            elif isinstance(data, Report):
                 request = data.get()
-                request['run_id'] = self.run_id
-                request.update(self._kwargs)
+                request['run_id'] = self.__run_id
+                request.update(self.__kwargs)
                 try:
-                    self._api.results.add_result_for_case(**request)
+                    self.__api.results.add_result_for_case(**request)
                 except RequestException:
                     pass
-            else:
-                break
 
-    def stop(self):
-        self._queue.put('stop')
+    def stop(self) -> None:
+        self.__queue.put(SIGNAL.STOP)
         self.join()
+
+    @property
+    def queue_size(self) -> int:
+        return self.__queue.qsize()
 
 
 class FakeSender:
@@ -133,3 +146,7 @@ class FakeSender:
 
     def join(self):
         pass
+
+    @property
+    def queue_size(self) -> int:
+        return 0

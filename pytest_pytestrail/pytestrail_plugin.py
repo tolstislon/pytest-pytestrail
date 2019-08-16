@@ -15,7 +15,6 @@ class PyTestRail:
     reporter: Union[Sender, FakeSender]
 
     def __init__(self, config):
-        print('create')
         self.url: str = config.getoption('--tr-url') or config.getini('pytestrail-url')
         self.email: str = config.getoption('--tr-email') or config.getini('pytestrail-email')
         self.password: str = config.getoption('--tr-password') or config.getini('pytestrail-password')
@@ -26,6 +25,7 @@ class PyTestRail:
         self.reporter = FakeSender()
 
     def _selection_item(self, mark, case_id) -> bool:
+        # TODO Implement selection
         if not mark or case_id not in self.case_ids:
             return False
         return True
@@ -54,17 +54,13 @@ class PyTestRail:
     def pytest_report_header(self):
         if not self.url:
             raise MissingRequiredParameter('url')
-
         if not self.email:
             raise MissingRequiredParameter('email')
-
         if not self.password:
             raise MissingRequiredParameter('password')
-
-        self.api = TestRailAPI(self.url, self.email, self.password)
-
         if not self.test_run:
             raise MissingRequiredParameter('test-run')
+        self.api = TestRailAPI(self.url, self.email, self.password)
 
         response = self.api.tests.get_tests(self.test_run)
         self.case_ids = [i['case_id'] for i in response]
