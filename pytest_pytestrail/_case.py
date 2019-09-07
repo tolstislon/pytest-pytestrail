@@ -24,8 +24,12 @@ class Case:
 
 
 def get_case_id(data: tuple) -> Optional[int]:
-    nums = [int(re.search('(?P<id>[0-9]+$)', test_id).groupdict().get('id')) for test_id in data]
-    return nums[0] if nums else None
+    for num in (re.search(r'^\w?(?P<id>\d+$)', test_id) for test_id in data):
+        if num is not None:
+            case_id = num.group('id')
+            if case_id is not None:
+                return int(case_id)
+    return None
 
 
 def case_markers(item) -> Tuple[bool, int]:
