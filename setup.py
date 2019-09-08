@@ -1,5 +1,5 @@
 from m2r import parse_from_file
-from setuptools import setup
+from setuptools import setup, find_packages
 
 import pytest_pytestrail
 
@@ -11,10 +11,10 @@ setup(
     author='tolstislon',
     author_email='tolstislon@gmail.com',
     url='https://github.com/tolstislon/pytest-pytestrail',
-    packages=['pytest_pytestrail'],
+    packages=find_packages(exclude=['tests']),
     install_requires=[
         'pytest>=3.8.0',
-        'testrail-api>=1.1.1'
+        'testrail-api>=1.1.2'
     ],
     include_package_data=True,
     python_requires='>=3.6',
