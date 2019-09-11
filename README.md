@@ -1,4 +1,4 @@
-[![GitHub version](https://badge.fury.io/gh/tolstislon%2Fpytest-pytestrail.svg)](https://badge.fury.io/gh/tolstislon%2Fpytest-pytestrail)
+![PyPI](https://img.shields.io/pypi/v/pytest-pytestrail?color=yellow&label=version)
 [![Downloads](https://pepy.tech/badge/pytest-pytestrail)](https://pepy.tech/project/pytest-pytestrail)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pytest-pytestrail.svg)
 ![Pytest Version](https://img.shields.io/badge/pytest-%3E%3D3.8-blue.svg)
