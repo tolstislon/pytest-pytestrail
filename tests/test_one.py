@@ -22,7 +22,7 @@ def test_step_one():
 
 @case_one.step(2)
 def test_step_two():
-    assert True
+    assert False
 
 
 case_two = pytestrail.steps_case('C10002')

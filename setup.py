@@ -5,22 +5,24 @@ import pytest_pytestrail
 
 setup(
     name='pytest-pytestrail',
-    description='pytest plugin for interaction with TestRail',
+    description=pytest_pytestrail.__description__,
     long_description=parse_from_file('README.md'),
     version=pytest_pytestrail.__version__,
-    author='tolstislon',
-    author_email='tolstislon@gmail.com',
-    url='https://github.com/tolstislon/pytest-pytestrail',
+    author=pytest_pytestrail.__author__,
+    author_email=pytest_pytestrail.__author_email__,
+    url=pytest_pytestrail.__url__,
     packages=find_packages(exclude=['tests']),
     install_requires=[
         'pytest>=3.8.0',
-        'testrail-api>=1.1.2'
+        'testrail-api>=1.3.0'
     ],
     include_package_data=True,
     python_requires='>=3.6',
-    license='MIT License',
+    license=pytest_pytestrail.__license__,
     entry_points={
-        'pytest11': ['pytest_pytestrail = pytest_pytestrail.conftest']
+        'pytest11': [
+            'pytest_pytestrail = pytest_pytestrail.conftest'
+        ]
     },
     keywords=[
         'testrail',

@@ -3,7 +3,7 @@ from typing import Union
 import pytest
 from testrail_api import TestRailAPI
 
-from . import _constants as cons
+from .__version__ import __version__
 from ._case import case_markers
 from ._exception import MissingRequiredParameter
 from ._sender import Sender, FakeSender
@@ -70,7 +70,7 @@ class PyTestRail:
             self.reporter = Sender(self.api, self.test_run)
             self.reporter.start()
 
-        return f'PyTestRail {cons.__version__}: ON'
+        return f'PyTestRail {__version__}: ON'
 
     @pytest.hookimpl(trylast=True)
     def pytest_collection_modifyitems(self, items, config):
