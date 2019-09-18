@@ -20,20 +20,20 @@ pip install pytest-pytestrail
 from pytest_pytestrail import pytestrail
 
 
-@pytestrail.case('C12')
+@pytestrail.case('C32')
 def test_one():
-    ... # test code
+    assert True
 
-@pytestrail.case('C13')
+@pytestrail.case('C12')
 def test_two():
-    ... # test code
+    assert True
 ```
 
 ###### Steps
 ```python
 from pytest_pytestrail import pytestrail
 
-case = pytestrail.steps_case('C2')
+case = pytestrail.steps_case('C3')
 
 @case.step(1)
 def test_step_one():
@@ -50,8 +50,12 @@ def test_step_two():
 from pytest_pytestrail import pytestrail
 import pytest
 
-@pytest.mark.parametrize('data', pytestrail.params('C84', [1, 2, 3, 4, 5]))
+@pytest.mark.parametrize('data', pytestrail.params('C84', [1, 23, 33, 1, 57]))
 def test_five(data):
+    assert data
+
+@pytest.mark.parametrize('data', [pytestrail.param(1, 'C55'), pytestrail.param(2, 'C56')])
+def test_six(data):
     assert data
 ```
 
