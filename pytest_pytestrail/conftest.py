@@ -1,4 +1,5 @@
 from .pytestrail_plugin import PyTestRail
+from ._constants import PYTESTRAIL_MARK, PYTESTRAIL_CASE_MARK
 
 
 def pytest_addoption(parser):
@@ -21,6 +22,7 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
-    config.addinivalue_line("markers", "pytestrail(*args): Mark test")
+    config.addinivalue_line("markers", f"{PYTESTRAIL_MARK}(*args): Mark test")
+    config.addinivalue_line("markers", f"{PYTESTRAIL_CASE_MARK}(case_id, step): Mark test")
     if config.getoption('--pytestrail') or config.getini('pytestrail'):
         config.pluginmanager.register(PyTestRail(config), name="pytest-pytestrail-instance")

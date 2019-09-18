@@ -1,6 +1,5 @@
-__version__ = '0.2.1'
-
 PYTESTRAIL_MARK = 'pytestrail'
+PYTESTRAIL_CASE_MARK = 'pytestrail_case'
 
 STATUS = {
     "passed": 1,
