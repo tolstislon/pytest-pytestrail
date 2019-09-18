@@ -1,7 +1,14 @@
 import warnings
-from typing import Any, Optional
+from typing import Any, Optional, Iterable, Generator
 
 import pytest
+
+__all__ = [
+    'case',
+    'steps_case',
+    'param',
+    'params'
+]
 
 
 def case(case_id: str, *args):
@@ -20,7 +27,8 @@ class steps_case:
 
 
 def param(value: Any, case_id: str, step: Optional[int] = None):
-    return pytest.param(
-        value,
-        marks=case(case_id) if step is None else steps_case(case_id).step(step)
-    )
+    return pytest.param(value, marks=case(case_id) if step is None else steps_case(case_id).step(step))
+
+
+def params(case_id: str, parametrize: Iterable) -> Generator:
+    return (param(value, case_id, step) for step, value in enumerate(parametrize, 1))

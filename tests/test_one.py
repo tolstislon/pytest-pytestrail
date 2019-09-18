@@ -2,7 +2,7 @@ from pytest_pytestrail import pytestrail
 import pytest
 
 
-@pytestrail.case('C1')
+@pytestrail.case('C79')
 def test_one():
     assert True
 
@@ -12,7 +12,7 @@ def test_two():
     assert True
 
 
-case_one = pytestrail.steps_case('C2')
+case_one = pytestrail.steps_case('C80')
 
 
 @case_one.step(1)
@@ -38,11 +38,16 @@ def test_step_four():
     assert True
 
 
-@pytest.mark.parametrize('data', [pytestrail.param(1, 'C3'), pytestrail.param(2, 'C4')])
+@pytest.mark.parametrize('data', [pytestrail.param(1, 'C81'), pytestrail.param(2, 'C82')])
 def test_three(data):
     assert data
 
 
-@pytest.mark.parametrize('data', [pytestrail.param(1, 'C5', 1), pytestrail.param(2, 'C5', 2)])
+@pytest.mark.parametrize('data', [pytestrail.param(1, 'C83', 1), pytestrail.param(2, 'C83', 2)])
 def test_four(data):
+    assert data
+
+
+@pytest.mark.parametrize('data', pytestrail.params('C84', [1, 2, 3, 4, 5]))
+def test_five(data):
     assert data

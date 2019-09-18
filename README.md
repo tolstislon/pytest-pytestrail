@@ -50,9 +50,8 @@ def test_step_two():
 from pytest_pytestrail import pytestrail
 import pytest
 
-# pytestrail.param(value, case, step)
-@pytest.mark.parametrize('data', [pytestrail.param(1, 'C5', 1), pytestrail.param(2, 'C5', 2)])
-def test_four(data):
+@pytest.mark.parametrize('data', pytestrail.params('C84', [1, 2, 3, 4, 5]))
+def test_five(data):
     assert data
 ```
 
