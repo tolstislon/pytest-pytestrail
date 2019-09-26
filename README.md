@@ -61,6 +61,13 @@ def test_six(data):
 
 #### Configuration
 
+Support environment variables
+* TESTRAIL_URL
+* TESTRAIL_EMAIL
+* TESTRAIL_PASSWORD
+
+
+
 ##### Config file
 
 `pytest.ini` or `setup.cfg` [pytest configuration](https://docs.pytest.org/en/latest/customize.html)
