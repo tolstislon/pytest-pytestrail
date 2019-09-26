@@ -126,6 +126,7 @@ class Sender(threading.Thread):
 
     def stop(self) -> None:
         self.__queue.put(SIGNAL.STOP)
+        print('\nCompleting Report Upload ...')
         self.join()
 
     @property
@@ -146,6 +147,10 @@ class FakeSender:
 
     def join(self):
         pass
+
+    @staticmethod
+    def is_alive() -> bool:
+        return False
 
     @property
     def queue_size(self) -> int:
