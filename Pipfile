@@ -8,7 +8,7 @@ m2r = "==0.2.1"
 twine = "==1.14.0"
 
 [packages]
-testrail-api = "==1.3.5"
+testrail-api = "==1.4.0"
 pytest = "==5.1.2"
 
 [requires]

@@ -102,7 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# PyCharm
 .idea/
+
+# Project
 todo.txt
-dfg.py
 tests/

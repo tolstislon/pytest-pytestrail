@@ -1,27 +1,19 @@
 from typing import Union
 
 import pytest
-from testrail_api import TestRailAPI
 
 from .__version__ import __version__
 from ._case import case_markers
-from ._exception import MissingRequiredParameter
+from ._config import Config
 from ._sender import Sender, FakeSender
 
 
 class PyTestRail:
-    api: TestRailAPI
     case_ids: list
     reporter: Union[Sender, FakeSender]
 
-    def __init__(self, config):
-        self.url: str = config.getoption('--tr-url') or config.getini('pytestrail-url')
-        self.email: str = config.getoption('--tr-email') or config.getini('pytestrail-email')
-        self.password: str = config.getoption('--tr-password') or config.getini('pytestrail-password')
-        self.test_run = config.getoption('--tr-test-run') or config.getini('pytestrail-test-run')
-        self.report = config.getoption('--tr-report') or config.getini('pytestrail-report')
-        self.no_decorator_skip = config.getoption('--tr-no-decorator-skip') or config.getini(
-            'pytestrail-no-decorator-skip')
+    def __init__(self, conf):
+        self._config = Config(conf)
         self.reporter = FakeSender()
 
     def _selection_item(self, mark, case_id) -> bool:
@@ -52,22 +44,11 @@ class PyTestRail:
                 setattr(case_items[0].pytestrail_case, 'last', True)
 
     def pytest_report_header(self):
-        if not self.url:
-            raise MissingRequiredParameter('url')
-        if not self.email:
-            raise MissingRequiredParameter('email')
-        if not self.password:
-            raise MissingRequiredParameter('password')
-        if not self.test_run:
-            raise MissingRequiredParameter('test-run')
-        self.api = TestRailAPI(self.url, self.email, self.password)
-
-        response = self.api.tests.get_tests(self.test_run)
-        self.case_ids = [i['case_id'] for i in response]
+        self.case_ids = self._config.get_case_ids()
 
         # create reporting
-        if self.report:
-            self.reporter = Sender(self.api, self.test_run)
+        if self._config.report:
+            self.reporter = Sender(api=self._config.api, run_id=self._config.get_test_run())
             self.reporter.start()
 
         return f'PyTestRail {__version__}: ON'
@@ -92,14 +73,12 @@ class PyTestRail:
         outcome = yield
         rep = outcome.get_result()
 
-        if self.report:
-            ids = hasattr(item, 'pytestrail_case')
-            if rep.when == 'call' and ids:
-                self.reporter.send(item.pytestrail_case, rep)
-            elif rep.when in ('setup', 'teardown') and ids and rep.outcome != 'passed':
-                self.reporter.send(item.pytestrail_case, rep)
+        ids = hasattr(item, 'pytestrail_case')
+        if rep.when == 'call' and ids:
+            self.reporter.send(item.pytestrail_case, rep)
+        elif rep.when in ('setup', 'teardown') and ids and rep.outcome != 'passed':
+            self.reporter.send(item.pytestrail_case, rep)
 
     def pytest_sessionfinish(self):
         self.reporter.stop()
-        print('\nCompleting Report Upload ...')
         self.reporter.join()
