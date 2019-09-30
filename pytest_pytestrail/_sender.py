@@ -1,16 +1,16 @@
 import abc
 import threading
 import time
+from enum import Enum, auto
 from queue import Queue
-from typing import List, Tuple, Optional, Union
+from typing import List, Tuple, Optional, Union, Dict
 
 from _pytest.reports import TestReport
 from requests.exceptions import RequestException
+from testrail_api import TestRailAPI
 
 from ._case import Case
 from ._constants import STATUS
-from enum import Enum, auto
-from testrail_api import TestRailAPI
 
 
 class SIGNAL(Enum):
@@ -20,13 +20,13 @@ class SIGNAL(Enum):
 class Report(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def get(self) -> dict:
+    def get(self) -> Dict[str, Union[str, int]]:
         pass
 
 
 class ReportCase(Report):
 
-    def __init__(self, case: Case, report: TestReport):
+    def __init__(self, case: Case, report: TestReport) -> None:
         self.case = case
         self.report = report
 
@@ -40,14 +40,14 @@ class ReportCase(Report):
         data = comment.__str__().split('\n')
         return '\n'.join([f'\t{line}' for line in data])
 
-    def get_step(self) -> Tuple[dict, float]:
+    def get_step(self) -> Tuple[Dict[str, Union[str, int]], float]:
         return {
                    'content': f'Step {self.case.step}',
                    'status_id': STATUS[self.report.outcome],
                    'actual': self.pars_comment(self.report.longrepr)
                }, self.report.duration
 
-    def get(self) -> dict:
+    def get(self) -> Dict[str, Union[str, int]]:
         return {
             'case_id': self.case.case_id,
             'status_id': STATUS[self.report.outcome],
@@ -58,10 +58,10 @@ class ReportCase(Report):
 
 class ReportStep(Report):
 
-    def __init__(self, data: List[ReportCase]):
+    def __init__(self, data: List[ReportCase]) -> None:
         self.steps = data
 
-    def get(self) -> dict:
+    def get(self) -> Dict[str, Union[str, int]]:
         step_results = []
         elapsed = 0
         status_id = STATUS['passed']
@@ -81,9 +81,12 @@ class ReportStep(Report):
         }
 
 
+_REPORT = Union[ReportCase, ReportStep]
+
+
 class Sender(threading.Thread):
 
-    def __init__(self, api: TestRailAPI, run_id: int, **kwargs):
+    def __init__(self, api: TestRailAPI, run_id: int, **kwargs) -> None:
         self.__api = api
         self.__run_id = run_id
         self.__kwargs = {k: v for k, v in kwargs.items() if v}
@@ -96,7 +99,7 @@ class Sender(threading.Thread):
         if rep is not None:
             self.__queue.put(rep)
 
-    def __create_report(self, case: Case, report: TestReport) -> Union[ReportCase, ReportStep, None]:
+    def __create_report(self, case: Case, report: TestReport) -> Optional[_REPORT]:
         rep = ReportCase(case, report)
         if case.is_step:
             data = self.__steps.setdefault(case.case_id, [])
@@ -139,13 +142,13 @@ class FakeSender:
     def __init__(self, *args, **kwargs):
         pass
 
-    def send(self, *args, **kwargs):
+    def send(self, *args, **kwargs) -> None:
         pass
 
-    def stop(self):
+    def stop(self) -> None:
         pass
 
-    def join(self):
+    def join(self) -> None:
         pass
 
     @staticmethod

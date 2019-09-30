@@ -33,6 +33,43 @@ def pytest_addoption(parser):
     group.addoption('--tr-report', action='store_true', help=_help, default=False)
     parser.addini('pytestrail-report', help=_help, default=False, type="bool")
 
+    _help = 'Do not check for valid SSL certificate on TestRail host'
+    group.addoption('--tr-no-ssl-check', action='store_true', help=_help, default=False)
+    parser.addini('pytestrail-no-ssl-check', help=_help, default=False, type="bool")
+
+    _help = 'ID of the project'
+    group.addoption('--tr-project-id', action='store', default=None, help=_help)
+    parser.addini('pytestrail-project-id', help=_help, default=None)
+
+    _help = 'ID of the test suite'
+    group.addoption('--tr-suite-id', action='store', default=None, help=_help)
+    parser.addini('pytestrail-suite-id', help=_help, default=None)
+
+    _help = 'Name given to testrun, that appears in TestRail'
+    group.addoption('--tr-testrun-name', action='store', default=None, help=_help)
+    parser.addini('pytestrail-testrun-name', help=_help, default='Auto generated {datetime}')
+
+    _help = 'Name given to testrun, that appears in TestRail'
+    group.addoption('--tr-date-format', action='store', default=None, help=_help)
+    parser.addini('pytestrail-date-format', help=_help, default='%Y-%m-%d %H:%M:%S')
+
+    _help = 'Use local time zone (Default: UTC)'
+    group.addoption('--tr-tz-local', action='store_true', help=_help, default=False)
+    parser.addini('pytestrail-tz-local', help=_help, default=False, type="bool")
+
+    _help = 'Close test run on completion'
+    group.addoption('--tr-close-on-complete', action='store_true', help=_help, default=False)
+    parser.addini('pytestrail-close-on-complete', help=_help, default=False, type="bool")
+
+    _help = 'Set test tun milestone'
+    group.addoption('--tr-milestone-id', action='store', default=None, help=_help)
+    parser.addini('pytestrail-milestone-id', help=_help, default=None)
+
+    _help = 'Description given to testrun, that appears in TestRail'
+    group.addoption('--tr-testrun-description', action='store', default=None, help=_help)
+    parser.addini('pytestrail-testrun-description', help=_help,
+                  default='Auto generated {datetime} PyTestRail {__version__}')
+
 
 def pytest_configure(config):
     config.addinivalue_line("markers", f"{PYTESTRAIL_MARK}(*args): Mark test")

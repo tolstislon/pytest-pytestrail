@@ -10,6 +10,7 @@ twine = "==1.14.0"
 [packages]
 testrail-api = "==1.4.0"
 pytest = "==5.1.2"
+e1839a8 = {editable = true,path = "."}
 
 [requires]
 python_version = "3.7"

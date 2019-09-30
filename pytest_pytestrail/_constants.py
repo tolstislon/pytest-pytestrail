@@ -1,7 +1,9 @@
-PYTESTRAIL_MARK = 'pytestrail'
-PYTESTRAIL_CASE_MARK = 'pytestrail_case'
+from typing import Dict
 
-STATUS = {
+PYTESTRAIL_MARK: str = 'pytestrail'
+PYTESTRAIL_CASE_MARK: str = 'pytestrail_case'
+
+STATUS: Dict[str, int] = {
     "passed": 1,
     "skipped": 2,
     "failed": 5
