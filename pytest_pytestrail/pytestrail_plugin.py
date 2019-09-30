@@ -24,13 +24,13 @@ class PyTestRail:
 
     @staticmethod
     def _sorted_items(items) -> None:
-        h = {}
+        step_cases = {}
         for item in items:
             case = getattr(item, 'pytestrail_case', None)
             if case is not None and case.is_step:
-                case_items = h.setdefault(case.case_id, [])
+                case_items = step_cases.setdefault(case.case_id, [])
                 case_items.append(item)
-        for case_items in h.values():
+        for case_items in step_cases.values():
             if len(case_items) > 1:
                 case_items.sort(key=lambda x: x.pytestrail_case.step)
                 for count, item in enumerate(case_items):
@@ -44,7 +44,7 @@ class PyTestRail:
                 setattr(case_items[0].pytestrail_case, 'last', True)
 
     def pytest_report_header(self):
-        self.case_ids = self._config.get_case_ids()
+        self.case_ids = self._config.get_case_ids(self._config.test_run)
 
         # create reporting
         if self._config.report:
@@ -82,3 +82,4 @@ class PyTestRail:
     def pytest_sessionfinish(self):
         self.reporter.stop()
         self.reporter.join()
+        self._config.close()

@@ -1,5 +1,5 @@
 import warnings
-from typing import Any, Optional, Iterable, Generator
+from typing import Any, Optional, Iterable, Iterator, TypeVar
 
 import pytest
 
@@ -10,10 +10,12 @@ __all__ = [
     'params'
 ]
 
+ParameterSet = TypeVar('ParameterSet')
+
 
 def case(case_id: str, *args):
     if args:
-        warnings.warn('case takes only one argument', DeprecationWarning)
+        warnings.warn('Case takes only one argument', DeprecationWarning)
     return pytest.mark.pytestrail(case_id)
 
 
@@ -26,9 +28,9 @@ class steps_case:
         return pytest.mark.pytestrail_case(self._case_id, step=step)
 
 
-def param(value: Any, case_id: str, step: Optional[int] = None):
+def param(value: Any, case_id: str, step: Optional[int] = None) -> ParameterSet:
     return pytest.param(value, marks=case(case_id) if step is None else steps_case(case_id).step(step))
 
 
-def params(case_id: str, parametrize: Iterable) -> Generator:
+def params(case_id: str, parametrize: Iterable) -> Iterator[ParameterSet]:
     return (param(value, case_id, step) for step, value in enumerate(parametrize, 1))

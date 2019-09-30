@@ -5,10 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 m2r = "==0.2.1"
-twine = "==1.14.0"
+twine = "==2.0.0"
 
 [packages]
-testrail-api = "==1.4.0"
+testrail-api = "==1.4.1"
 pytest = "==5.1.2"
 
 [requires]
