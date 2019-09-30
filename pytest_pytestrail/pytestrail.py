@@ -1,5 +1,5 @@
 import warnings
-from typing import Any, Optional, Iterable, Generator, TypeVar
+from typing import Any, Optional, Iterable, Iterator, TypeVar
 
 import pytest
 
@@ -32,5 +32,5 @@ def param(value: Any, case_id: str, step: Optional[int] = None) -> ParameterSet:
     return pytest.param(value, marks=case(case_id) if step is None else steps_case(case_id).step(step))
 
 
-def params(case_id: str, parametrize: Iterable) -> Generator[ParameterSet]:
+def params(case_id: str, parametrize: Iterable) -> Iterator[ParameterSet]:
     return (param(value, case_id, step) for step, value in enumerate(parametrize, 1))

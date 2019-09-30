@@ -74,25 +74,43 @@ Support environment variables
 
 ```ini
 [pytest]
-pytestrail = True  
-pytestrail-url = https://example.testrail.com
-pytestrail-email = exemle@mail.com
-pytestrail-password = password
-pytestrail-test-run = 12
-pytestrail-no-decorator-skip = True
-pytestrail-report = True
+pytestrail (bool):                       Enable plugin
+pytestrail-url (string):                 TestRail address
+pytestrail-email (string):               Email for the account on the TestRail
+pytestrail-password (string):            Password for the account on the TestRail
+pytestrail-test-run (string):            ID testrun
+pytestrail-no-decorator-skip (bool):     Skip tests without decorator
+pytestrail-report (bool):                Enable report
+pytestrail-no-ssl-check (bool):          Do not check for valid SSL certificate on TestRail host
+pytestrail-project-id (string):          ID of the project
+pytestrail-suite-id (string):            ID of the test suite
+pytestrail-testrun-name (string):        Name given to testrun, that appears in TestRail
+pytestrail-date-format (string):         Name given to testrun, that appears in TestRail
+pytestrail-tz-local (bool):              Use local time zone (Default: UTC)
+pytestrail-close-on-complete (bool):     Close test run on completion
+pytestrail-milestone-id (string):        Set test tun milestone
+pytestrail-testrun-description (string): Description given to testrun, that appears in TestRail
 ```
 
 or
 
 ##### Command line options
 
-```shell
---pytestrail            Enable plugin
---tr-url=URL            TestRail address
---tr-email=EMAIL        Email for the account on the TestRail
---tr-password=PASSWORD  Password for the account on the TestRail
---tr-test-run=12        ID testrun
---tr-no-decorator-skip  Skip tests without decorator
---tr-report             Enable report
+```bash
+--pytestrail                                    Enable plugin
+--tr-url=TR_URL                                 TestRail address
+--tr-email=TR_EMAIL                             Email for the account on the TestRail
+--tr-password=TR_PASSWORD                       Password for the account on the TestRail
+--tr-test-run=TR_TEST_RUN                       ID testrun
+--tr-no-decorator-skip                          Skip tests without decorator
+--tr-report                                     Enable report
+--tr-no-ssl-check                               Do not check for valid SSL certificate on TestRail host
+--tr-project-id=TR_PROJECT_ID                   ID of the project
+--tr-suite-id=TR_SUITE_ID                       ID of the test suite
+--tr-testrun-name=TR_TESTRUN_NAME               Name given to testrun, that appears in TestRail
+--tr-date-format=TR_DATE_FORMAT                 Name given to testrun, that appears in TestRail
+--tr-tz-local                                   Use local time zone (Default: UTC)
+--tr-close-on-complete                          Close test run on completion
+--tr-milestone-id=TR_MILESTONE_ID               Set test tun milestone
+--tr-testrun-description=TR_TESTRUN_DESCRIPTION Description given to testrun, that appears in TestRail
 ```
