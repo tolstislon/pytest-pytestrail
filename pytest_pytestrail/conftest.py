@@ -22,7 +22,7 @@ def pytest_addoption(parser):
     parser.addini('pytestrail-password', help=_help, default=None)
 
     _help = 'ID testrun'
-    group.addoption('--tr-test-run', action='store', default=None, help=_help)
+    group.addoption('--tr-test-run', action='store', default=None, help=_help, type=int)
     parser.addini('pytestrail-test-run', help=_help, default=None)
 
     _help = 'Skip tests without decorator'
@@ -38,11 +38,11 @@ def pytest_addoption(parser):
     parser.addini('pytestrail-no-ssl-check', help=_help, default=False, type="bool")
 
     _help = 'ID of the project'
-    group.addoption('--tr-project-id', action='store', default=None, help=_help)
+    group.addoption('--tr-project-id', action='store', default=None, help=_help, type=int)
     parser.addini('pytestrail-project-id', help=_help, default=None)
 
     _help = 'ID of the test suite'
-    group.addoption('--tr-suite-id', action='store', default=None, help=_help)
+    group.addoption('--tr-suite-id', action='store', default=None, help=_help, type=int)
     parser.addini('pytestrail-suite-id', help=_help, default=None)
 
     _help = 'Name given to testrun, that appears in TestRail'
@@ -62,7 +62,7 @@ def pytest_addoption(parser):
     parser.addini('pytestrail-close-on-complete', help=_help, default=False, type="bool")
 
     _help = 'Set test tun milestone'
-    group.addoption('--tr-milestone-id', action='store', default=None, help=_help)
+    group.addoption('--tr-milestone-id', action='store', default=None, help=_help, type=int)
     parser.addini('pytestrail-milestone-id', help=_help, default=None)
 
     _help = 'Description given to testrun, that appears in TestRail'
