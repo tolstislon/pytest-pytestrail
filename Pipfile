@@ -6,10 +6,12 @@ verify_ssl = true
 [dev-packages]
 m2r = "==0.2.1"
 twine = "==2.0.0"
+mypy = "*"
 
 [packages]
-testrail-api = "==1.4.1"
-pytest = "==5.1.2"
+testrail-api = "==1.4.2"
+pytest = "==5.2.0"
+e1839a8 = {editable = true,path = "."}
 
 [requires]
 python_version = "3.7"
