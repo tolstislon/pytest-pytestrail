@@ -88,6 +88,7 @@ class Config:
         except (ValueError, TypeError):
             _datetime = self.__date_time.isoformat(sep=' ')
         data = _Dict(datetime=_datetime, __version__=__version__)
+        data.update(getattr(self._conf, '_metadata', {}))
         return value.format_map(data)
 
     def close(self):
