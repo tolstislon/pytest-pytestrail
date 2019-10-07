@@ -68,6 +68,7 @@ class Config:
                 val['milestone_id'] = self.milestone_id
             if self.test_run:
                 val['case_ids'] = self.get_case_ids(self.test_run)
+                val['include_all'] = False
             else:
                 val['include_all'] = True
             response = self.api.runs.add_run(**val)
