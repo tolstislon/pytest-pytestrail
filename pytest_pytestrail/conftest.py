@@ -49,7 +49,7 @@ def pytest_addoption(parser):
     group.addoption('--tr-testrun-name', action='store', default=None, help=_help)
     parser.addini('pytestrail-testrun-name', help=_help, default='Auto generated {datetime}')
 
-    _help = 'Name given to testrun, that appears in TestRail'
+    _help = 'Date format (default: %Y-%m-%d %H:%M:%S)'
     group.addoption('--tr-date-format', action='store', default=None, help=_help)
     parser.addini('pytestrail-date-format', help=_help, default='%Y-%m-%d %H:%M:%S')
 

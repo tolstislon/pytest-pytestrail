@@ -85,7 +85,7 @@ pytestrail-no-ssl-check (bool):          Do not check for valid SSL certificate 
 pytestrail-project-id (string):          ID of the project
 pytestrail-suite-id (string):            ID of the test suite
 pytestrail-testrun-name (string):        Name given to testrun, that appears in TestRail
-pytestrail-date-format (string):         Name given to testrun, that appears in TestRail
+pytestrail-date-format (string):         Date format (default: %Y-%m-%d %H:%M:%S)
 pytestrail-tz-local (bool):              Use local time zone (Default: UTC)
 pytestrail-close-on-complete (bool):     Close test run on completion
 pytestrail-milestone-id (string):        Set test tun milestone
@@ -108,7 +108,7 @@ or
 --tr-project-id=TR_PROJECT_ID                   ID of the project
 --tr-suite-id=TR_SUITE_ID                       ID of the test suite
 --tr-testrun-name=TR_TESTRUN_NAME               Name given to testrun, that appears in TestRail
---tr-date-format=TR_DATE_FORMAT                 Name given to testrun, that appears in TestRail
+--tr-date-format=TR_DATE_FORMAT                 Date format (default: %Y-%m-%d %H:%M:%S)
 --tr-tz-local                                   Use local time zone (Default: UTC)
 --tr-close-on-complete                          Close test run on completion
 --tr-milestone-id=TR_MILESTONE_ID               Set test tun milestone
