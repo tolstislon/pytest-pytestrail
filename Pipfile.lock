@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "335ef748e314028fc840092b2c82d1ab94225d63a740131d2c61595398a1289a"
+            "sha256": "26990e696a4a48e287cfa5b769ae2a59022455810b2bf067603480a3852fc85f"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -51,10 +51,6 @@
             ],
             "markers": "sys_platform == 'win32'",
             "version": "==0.4.1"
-        },
-        "e1839a8": {
-            "editable": true,
-            "path": "."
         },
         "idna": {
             "hashes": [
