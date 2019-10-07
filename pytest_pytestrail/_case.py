@@ -1,6 +1,8 @@
 import re
 from typing import Optional, Tuple
 
+from pytest import Function
+
 from . import _constants as cons
 
 
@@ -32,7 +34,7 @@ def get_case_id(data: Tuple[str]) -> Optional[int]:
     return None
 
 
-def case_markers(item) -> Tuple[bool, int]:
+def case_markers(item: Function) -> Tuple[bool, int]:
     for i in item.iter_markers(name=cons.PYTESTRAIL_MARK):
         num = get_case_id(i.args)
         if isinstance(num, int):

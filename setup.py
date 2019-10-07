@@ -14,7 +14,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=[
         'pytest>=3.8.0',
-        'testrail-api>=1.4.1'
+        'testrail-api>=1.4.2'
     ],
     include_package_data=True,
     python_requires='>=3.6',

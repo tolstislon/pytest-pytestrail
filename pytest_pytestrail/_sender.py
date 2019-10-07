@@ -20,7 +20,7 @@ class SIGNAL(Enum):
 class Report(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def get(self) -> Dict[str, Union[str, int]]:
+    def get(self) -> dict:
         pass
 
 
@@ -61,9 +61,9 @@ class ReportStep(Report):
     def __init__(self, data: List[ReportCase]) -> None:
         self.steps = data
 
-    def get(self) -> Dict[str, Union[str, int]]:
+    def get(self) -> Dict[str, Union[str, int, list]]:
         step_results = []
-        elapsed = 0
+        elapsed: float = 0
         status_id = STATUS['passed']
         for step in self.steps:
             result, duration = step.get_step()
@@ -85,6 +85,8 @@ _REPORT = Union[ReportCase, ReportStep]
 
 
 class Sender(threading.Thread):
+    __queue: Queue
+    __steps: Dict[int, list]
 
     def __init__(self, api: TestRailAPI, run_id: int, **kwargs) -> None:
         self.__api = api
