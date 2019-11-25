@@ -6,7 +6,6 @@ from queue import Queue
 from typing import List, Tuple, Optional, Union, Dict
 
 from _pytest.reports import TestReport
-from requests.exceptions import RequestException
 from testrail_api import TestRailAPI
 
 from ._case import Case
@@ -126,7 +125,7 @@ class Sender(threading.Thread):
                 request.update(self.__kwargs)
                 try:
                     self.__api.results.add_result_for_case(**request)
-                except RequestException:
+                except Exception:
                     pass
 
     def stop(self) -> None:
