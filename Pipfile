@@ -10,7 +10,7 @@ mypy = "*"
 pytest-metadata = "==1.8.0"
 
 [packages]
-testrail-api = "==1.4.6"
+testrail-api = "==1.4.11"
 pytest = "==5.3.5"
 
 [requires]
