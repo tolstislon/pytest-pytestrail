@@ -109,3 +109,4 @@ venv.bak/
 # Project
 todo.txt
 tests/
+Pipfile.lock
