@@ -1,4 +1,4 @@
-__version__ = '0.10.0a0'
+__version__ = '0.10.0a1'
 __url__ = 'https://github.com/tolstislon/pytest-pytestrail'
 __description__ = 'Pytest plugin for interaction with TestRail'
 __author__ = 'tolstislon'

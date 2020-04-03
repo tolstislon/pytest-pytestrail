@@ -27,7 +27,7 @@ setup(
     license=pytest_pytestrail.__license__,
     entry_points={
         'pytest11': [
-            'pytest_pytestrail = pytest_pytestrail.conftest'
+            'pytest_pytestrail = pytest_pytestrail.plugin'
         ]
     },
     keywords=[
