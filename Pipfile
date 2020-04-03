@@ -4,13 +4,9 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-m2r = "==0.2.1"
-twine = "==3.1.1"
-mypy = "*"
-pytest-metadata = "==1.8.0"
 
 [packages]
-testrail-api = "==1.4.11"
+testrail-api = "==1.5.0"
 pytest = "==5.3.5"
 
 [requires]

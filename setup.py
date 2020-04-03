@@ -1,12 +1,18 @@
-from m2r import parse_from_file
-from setuptools import setup, find_packages
+from pathlib import Path
+
+from setuptools import find_packages, setup
 
 import pytest_pytestrail
+
+readme_file = Path(__file__).parent.absolute().joinpath('README.md')
+with readme_file.open(encoding='utf-8') as file:
+    long_description = file.read()
 
 setup(
     name='pytest-pytestrail',
     description=pytest_pytestrail.__description__,
-    long_description=parse_from_file('README.md'),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     version=pytest_pytestrail.__version__,
     author=pytest_pytestrail.__author__,
     author_email=pytest_pytestrail.__author_email__,
@@ -14,7 +20,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=[
         'pytest>=3.8.0',
-        'testrail-api>=1.4.11'
+        'testrail-api>=1.5.0'
     ],
     include_package_data=True,
     python_requires='>=3.6',
@@ -42,6 +48,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
-        'Topic :: Software Development :: Testing'
+        'Topic :: Software Development :: Testing',
+        'Topic :: Software Development :: Quality Assurance'
     ]
 )
