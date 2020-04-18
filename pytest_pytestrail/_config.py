@@ -5,7 +5,7 @@ from typing import List
 import pytest
 from testrail_api import TestRailAPI
 
-from .__version__ import __version__
+from . import __version__
 
 
 class _Dict(dict):

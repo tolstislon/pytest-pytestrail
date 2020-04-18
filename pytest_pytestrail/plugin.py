@@ -2,7 +2,7 @@ from typing import Dict, List, Union
 
 import pytest
 
-from .__version__ import __version__
+from . import __version__
 from ._case import Case, case_markers
 from ._config import Config
 from ._constants import PYTESTRAIL_CASE_MARK, PYTESTRAIL_MARK

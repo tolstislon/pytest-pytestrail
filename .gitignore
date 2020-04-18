@@ -110,3 +110,4 @@ venv.bak/
 todo.txt
 old_tests/
 Pipfile.lock
+__version__.py

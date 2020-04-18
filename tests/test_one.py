@@ -40,7 +40,7 @@ def test_start(testdir, mock):
     assert result.ret == 0
     result.assert_outcomes(passed=3)
     stdout = result.stdout.str()
-    assert re.search(r'PyTestRail [\w.]+: ON', stdout)
+    assert re.search(r'PyTestRail .+: ON', stdout)
 
 
 def test_start_ini(testdir, mock):
@@ -66,7 +66,7 @@ def test_start_ini(testdir, mock):
     assert result.ret == 0
     result.assert_outcomes(passed=3)
     stdout = result.stdout.str()
-    assert re.search(r'PyTestRail [\w.]+: ON', stdout)
+    assert re.search(r'PyTestRail .+: ON', stdout)
 
 
 def test_deselected(testdir, mock):
