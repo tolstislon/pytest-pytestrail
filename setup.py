@@ -23,7 +23,7 @@ setup(
         'testrail-api>=1.5.0'
     ],
     include_package_data=True,
-    python_requires='>=3.6',
+    python_requires='>=3.5',
     license=pytest_pytestrail.__license__,
     entry_points={
         'pytest11': [
