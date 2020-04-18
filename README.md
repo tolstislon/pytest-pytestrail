@@ -2,6 +2,7 @@
 [![Downloads](https://pepy.tech/badge/pytest-pytestrail)](https://pepy.tech/project/pytest-pytestrail)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pytest-pytestrail.svg)
 ![Pytest Version](https://img.shields.io/badge/pytest-%3E%3D3.8-blue.svg)
+[![Build Status](https://travis-ci.com/tolstislon/pytest-pytestrail.svg?branch=master)](https://travis-ci.com/tolstislon/pytest-pytestrail)
 
 # pytest-pytestrail
 

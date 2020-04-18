@@ -1,0 +1,29 @@
+dist: xenial
+language: python
+
+env:
+  global:
+    - LAST_PYTEST_VERSION=5.4.1
+  jobs:
+    - PYTEST_VERSION=3.8.0  # min support version
+    - PYTEST_VERSION=4.6.9
+    - PYTEST_VERSION=5.3.5
+    - PYTEST_VERSION=$LAST_PYTEST_VERSION
+
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+install:
+  - pip install pipenv
+  - pipenv install pytest==$PYTEST_VERSION
+  - pipenv install responses==0.10.12
+  - pipenv install -e .
+script:
+  - pytest ./tests
+
+
+notifications:
+  email:
+    on_success: never
+    on_failure: always

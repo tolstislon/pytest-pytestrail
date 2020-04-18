@@ -1,6 +1,6 @@
 from datetime import datetime
 from functools import lru_cache
-from typing import List, Optional
+from typing import List
 
 import pytest
 from testrail_api import TestRailAPI
@@ -15,21 +15,6 @@ class _Dict(dict):
 
 class Config:
     api: TestRailAPI
-    url: Optional[str]
-    email: Optional[str]
-    password: Optional[str]
-    test_run: Optional[int]
-    report: bool
-    no_decorator_skip: bool  # deprecation
-    ssl_check: bool
-    project_id: Optional[int]
-    suite_id: Optional[int]
-    testrun_name: str
-    date_format: str
-    close_on_complete: bool
-    milestone_id: Optional[int]
-    tz_local: bool
-    testrun_description: str
 
     def __init__(self, conf) -> None:
         self.url = conf.getoption('--tr-url') or conf.getini('pytestrail-url')
