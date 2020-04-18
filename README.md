@@ -1,7 +1,7 @@
-![PyPI](https://img.shields.io/pypi/v/pytest-pytestrail?color=yellow&label=version)
+[![PyPI](https://img.shields.io/pypi/v/pytest-pytestrail?color=yellow&label=version)](https://pypi.org/project/pytest-pytestrail/)
 [![Downloads](https://pepy.tech/badge/pytest-pytestrail)](https://pepy.tech/project/pytest-pytestrail)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pytest-pytestrail.svg)
-![Pytest Version](https://img.shields.io/badge/pytest-%3E%3D3.8-blue.svg)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pytest-pytestrail.svg)](https://pypi.org/project/pytest-pytestrail/)
+[![Pytest Version](https://img.shields.io/badge/pytest-%3E%3D3.8-blue.svg)](https://github.com/pytest-dev/pytest/releases)
 [![Build Status](https://travis-ci.com/tolstislon/pytest-pytestrail.svg?branch=master)](https://travis-ci.com/tolstislon/pytest-pytestrail)
 
 # pytest-pytestrail
