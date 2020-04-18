@@ -17,14 +17,12 @@ class SIGNAL(Enum):
 
 
 class Report(metaclass=abc.ABCMeta):
-
     @abc.abstractmethod
     def get(self) -> dict:
         pass
 
 
 class ReportCase(Report):
-
     def __init__(self, case: Case, report: TestReport) -> None:
         self.case = case
         self.report = report
@@ -35,48 +33,52 @@ class ReportCase(Report):
     @staticmethod
     def pars_comment(comment: Optional[str]) -> str:
         if comment is None:
-            return ''
-        data = comment.__str__().split('\n')
-        return '\n'.join([f'\t{line}' for line in data])
+            return ""
+        data = comment.__str__().split("\n")
+        return "\n".join([f"\t{line}" for line in data])
 
     def get_step(self) -> Tuple[Dict[str, Union[str, int]], float]:
-        return {
-                   'content': f'Step {self.case.step}',
-                   'status_id': STATUS[self.report.outcome],
-                   'actual': self.pars_comment(self.report.longrepr)
-               }, self.report.duration
+        return (
+            {
+                "content": f"Step {self.case.step}",
+                "status_id": STATUS[self.report.outcome],
+                "actual": self.pars_comment(self.report.longrepr),
+            },
+            self.report.duration,
+        )
 
     def get(self) -> Dict[str, Union[str, int]]:
         return {
-            'case_id': self.case.case_id,
-            'status_id': STATUS[self.report.outcome],
-            'comment': self.pars_comment(self.report.longrepr),
-            'elapsed': time.strftime('%Mm %Ss', time.gmtime(round(self.report.duration) or 1))
+            "case_id": self.case.case_id,
+            "status_id": STATUS[self.report.outcome],
+            "comment": self.pars_comment(self.report.longrepr),
+            "elapsed": time.strftime(
+                "%Mm %Ss", time.gmtime(round(self.report.duration) or 1)
+            ),
         }
 
 
 class ReportStep(Report):
-
     def __init__(self, data: List[ReportCase]) -> None:
         self.steps = data
 
     def get(self) -> Dict[str, Union[str, int, list]]:
         step_results = []
         elapsed: float = 0
-        status_id = STATUS['passed']
+        status_id = STATUS["passed"]
         for step in self.steps:
             result, duration = step.get_step()
             step_results.append(result)
             elapsed += duration
-            if result['status_id'] > status_id:
-                status_id = result['status_id']
+            if result["status_id"] > status_id:
+                status_id = result["status_id"]
         case_id = self.steps[-1].get_id()
         return {
-            'case_id': case_id,
-            'status_id': status_id,
-            'comment': '',
-            'elapsed': time.strftime('%Mm %Ss', time.gmtime(round(elapsed) or 1)),
-            'custom_step_results': step_results
+            "case_id": case_id,
+            "status_id": status_id,
+            "comment": "",
+            "elapsed": time.strftime("%Mm %Ss", time.gmtime(round(elapsed) or 1)),
+            "custom_step_results": step_results,
         }
 
 
@@ -121,7 +123,7 @@ class Sender(threading.Thread):
                 break
             elif isinstance(data, Report):
                 request = data.get()
-                request['run_id'] = self.__run_id
+                request["run_id"] = self.__run_id
                 request.update(self.__kwargs)
                 try:
                     self.__api.results.add_result_for_case(**request)
@@ -130,7 +132,7 @@ class Sender(threading.Thread):
 
     def stop(self) -> None:
         self.__queue.put(SIGNAL.STOP)
-        print('\nCompleting Report Upload ...')
+        print("\nCompleting Report Upload ...")
         self.join()
 
     @property
@@ -139,7 +141,6 @@ class Sender(threading.Thread):
 
 
 class FakeSender:
-
     def __init__(self, *args, **kwargs):
         pass
 

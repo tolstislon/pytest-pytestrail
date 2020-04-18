@@ -1,8 +1,4 @@
-PYTESTRAIL_MARK = 'pytestrail'
-PYTESTRAIL_CASE_MARK = 'pytestrail_case'
+PYTESTRAIL_MARK = "pytestrail"
+PYTESTRAIL_CASE_MARK = "pytestrail_case"
 
-STATUS = {
-    "passed": 1,
-    "skipped": 2,
-    "failed": 5
-}
+STATUS = {"passed": 1, "skipped": 2, "failed": 5}

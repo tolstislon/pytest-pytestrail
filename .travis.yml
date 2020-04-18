@@ -27,9 +27,8 @@ deploy:
   password: $PYPI_PASSWORD
   skip_existing: true
   distributions: bdist_wheel --universal
-  server: https://test.pypi.org/legacy/
   on:
-    branch: $TRAVIS_BRANCH
+    tags: true
     repo: tolstislon/pytest-pytestrail
     python: "3.8"
     condition: $PYTEST_VERSION == $LAST_PYTEST_VERSION

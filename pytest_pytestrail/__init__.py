@@ -5,7 +5,4 @@ try:
 except ImportError:
     __version__ = "unknown"
 
-__all__ = [
-    'pytestrail',
-    '__version__'
-]
+__all__ = ["pytestrail", "__version__"]
