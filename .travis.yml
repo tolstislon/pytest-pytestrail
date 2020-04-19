@@ -2,23 +2,22 @@ dist: xenial
 language: python
 
 env:
-  global:
-    - LAST_PYTEST_VERSION=5.4.1
-  jobs:
-    - PYTEST_VERSION=3.8.0  # min support version
-    - PYTEST_VERSION=4.6.9
-    - PYTEST_VERSION=5.3.5
-    - PYTEST_VERSION=$LAST_PYTEST_VERSION
+  - PYTEST_VERSION="pytest==3.8.0"  # min support version
+  - PYTEST_VERSION="pytest==4.6.9"
+  - PYTEST_VERSION="pytest==5.3.5"
+  - PYTEST_VERSION="-U pytest"  # last version
 
 python:
+  - "pypy3"
+  - "3.5"
   - "3.6"
   - "3.7"
   - "3.8"
 install:
-  - pip install pipenv
-  - pipenv install pytest==$PYTEST_VERSION
-  - pipenv install responses==0.10.12
-  - pipenv install -e .
+  - pip install $PYTEST_VERSION
+  - pip install pytest-cov==2.8.1
+  - pip install responses==0.10.12
+  - pip install -e .
 script:
   - pytest ./tests
 deploy:
@@ -31,7 +30,10 @@ deploy:
     tags: true
     repo: tolstislon/pytest-pytestrail
     python: "3.8"
-    condition: $PYTEST_VERSION == $LAST_PYTEST_VERSION
+    condition: $PYTEST_VERSION == "-U pytest"
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 notifications:
   email:

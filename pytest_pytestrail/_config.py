@@ -14,8 +14,6 @@ class _Dict(dict):
 
 
 class Config:
-    api: TestRailAPI
-
     def __init__(self, conf) -> None:
         self.url = conf.getoption("--tr-url") or conf.getini("pytestrail-url")
         self.email = conf.getoption("--tr-email") or conf.getini("pytestrail-email")
@@ -57,15 +55,14 @@ class Config:
             "--tr-testrun-description"
         ) or conf.getini("pytestrail-testrun-description")
 
-        self.__date_time: datetime = datetime.now() if self.tz_local else datetime.utcnow()
+        self.__date_time = datetime.now() if self.tz_local else datetime.utcnow()
         self._conf = conf
-
-        self.work()
-
-    def work(self) -> None:
         self.api = TestRailAPI(
             self.url, self.email, self.password, verify=not self.ssl_check
         )
+        self.work()
+
+    def work(self) -> None:
         if self.project_id:
             val = {
                 "project_id": self.project_id,
