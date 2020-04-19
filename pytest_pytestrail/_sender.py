@@ -1,9 +1,9 @@
 import abc
 import threading
 import time
-from enum import Enum, auto
+from enum import Enum
 from queue import Queue
-from typing import List, Tuple, Optional, Union, Dict
+from typing import Dict, List, Optional, Tuple, Union
 
 from _pytest.reports import TestReport
 from testrail_api import TestRailAPI
@@ -13,7 +13,7 @@ from ._constants import STATUS
 
 
 class SIGNAL(Enum):
-    STOP = auto()
+    STOP = "STOP"
 
 
 class Report(metaclass=abc.ABCMeta):
@@ -35,12 +35,12 @@ class ReportCase(Report):
         if comment is None:
             return ""
         data = comment.__str__().split("\n")
-        return "\n".join([f"\t{line}" for line in data])
+        return "\n".join(["\t{}".format(line) for line in data])
 
     def get_step(self) -> Tuple[Dict[str, Union[str, int]], float]:
         return (
             {
-                "content": f"Step {self.case.step}",
+                "content": "Step {}".format(self.case.step),
                 "status_id": STATUS[self.report.outcome],
                 "actual": self.pars_comment(self.report.longrepr),
             },
@@ -64,7 +64,7 @@ class ReportStep(Report):
 
     def get(self) -> Dict[str, Union[str, int, list]]:
         step_results = []
-        elapsed: float = 0
+        elapsed = 0  # type: float
         status_id = STATUS["passed"]
         for step in self.steps:
             result, duration = step.get_step()
@@ -86,15 +86,12 @@ _REPORT = Union[ReportCase, ReportStep]
 
 
 class Sender(threading.Thread):
-    __queue: Queue
-    __steps: Dict[int, list]
-
     def __init__(self, api: TestRailAPI, run_id: int, **kwargs) -> None:
         self.__api = api
         self.__run_id = run_id
         self.__kwargs = {k: v for k, v in kwargs.items() if v}
-        self.__queue = Queue()
-        self.__steps = {}
+        self.__queue = Queue()  # type: Queue
+        self.__steps = {}  # type: Dict[int, list]
         super().__init__(target=self.__worker, args=())
 
     def send(self, case: Case, report: TestReport) -> None:
@@ -127,7 +124,7 @@ class Sender(threading.Thread):
                 request.update(self.__kwargs)
                 try:
                     self.__api.results.add_result_for_case(**request)
-                except Exception:
+                except Exception:  # noqa
                     pass
 
     def stop(self) -> None:

@@ -3,7 +3,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pytest-pytestrail.svg)](https://pypi.org/project/pytest-pytestrail/)
 [![Pytest Version](https://img.shields.io/badge/pytest-%3E%3D3.8-blue.svg)](https://github.com/pytest-dev/pytest/releases)
 [![Build Status](https://travis-ci.com/tolstislon/pytest-pytestrail.svg?branch=master)](https://travis-ci.com/tolstislon/pytest-pytestrail)
-
+[![codecov](https://codecov.io/gh/tolstislon/pytest-pytestrail/branch/master/graph/badge.svg)](https://codecov.io/gh/tolstislon/pytest-pytestrail)
 # pytest-pytestrail
 
 Pytest plugin for interaction with TestRail

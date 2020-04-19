@@ -21,7 +21,9 @@ class Case:
         return self.last
 
     def __repr__(self) -> str:
-        return f"<{self.__class__.__name__}(case_id:{self.case_id}, step: {self.step})>"
+        return "<{}(case_id:{}, step: {})>".format(
+            self.__class__.__name__, self.case_id, self.step
+        )
 
 
 def get_case_id(data: Tuple[str]) -> Optional[int]:

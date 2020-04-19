@@ -98,9 +98,9 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
-    config.addinivalue_line("markers", f"{PYTESTRAIL_MARK}(*args): Mark test")
+    config.addinivalue_line("markers", "{}(*args): Mark test".format(PYTESTRAIL_MARK))
     config.addinivalue_line(
-        "markers", f"{PYTESTRAIL_CASE_MARK}(case_id, step): Mark test"
+        "markers", "{}(case_id, step): Mark test".format(PYTESTRAIL_CASE_MARK)
     )
     if config.getoption("--pytestrail") or config.getini("pytestrail"):
         pytestrail = PyTestRail(config)
@@ -109,16 +109,15 @@ def pytest_configure(config):
 
 
 class _Function(pytest.Function):
-    pytestrail_case: Case
+    def pytestrail_case(self) -> Case:
+        pass
 
 
 class PyTestRail:
-    case_ids: List[int]
-    reporter: Union[Sender, FakeSender]
-
     def __init__(self, conf):
         self._config = Config(conf)
-        self.reporter = FakeSender()
+        self.reporter = FakeSender()  # type: Union[Sender, FakeSender]
+        self.case_ids = []  # type: List[int]
 
     def _selection_item(self, mark, case_id: int) -> bool:
         # TODO Implement selection
@@ -128,7 +127,7 @@ class PyTestRail:
 
     @staticmethod
     def _sorted_items(items: List[pytest.Function]) -> None:
-        step_cases: Dict[int, list] = {}
+        step_cases = {}  # type: Dict[int, list]
         for item in items:
             case = getattr(item, "pytestrail_case", None)
             if case is not None and case.is_step:
@@ -157,14 +156,14 @@ class PyTestRail:
             )
             self.reporter.start()
 
-        return f"PyTestRail {__version__}: ON"
+        return "PyTestRail {}: ON".format(__version__)
 
     @pytest.hookimpl(trylast=True)
     def pytest_collection_modifyitems(
         self, items: List[pytest.Function], config
     ) -> None:
-        selected_items: List[pytest.Function] = []
-        deselected_items: List[pytest.Function] = []
+        selected_items = []  # type: List[pytest.Function]
+        deselected_items = []  # type: List[pytest.Function]
 
         for item in items:
             mark, case_id = case_markers(item)

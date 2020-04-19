@@ -1,5 +1,5 @@
 import warnings
-from typing import Any, Optional, Iterable, Iterator, TypeVar
+from typing import Any, Iterable, Iterator, Optional, TypeVar
 
 import pytest
 
