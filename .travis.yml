@@ -16,7 +16,7 @@ python:
 install:
   - pip install $PYTEST_VERSION
   - pip install pytest-cov==2.8.1
-  - pip install responses==0.10.12
+  - pip install responses==0.10.14
   - pip install -e .
 script:
   - pytest ./tests
