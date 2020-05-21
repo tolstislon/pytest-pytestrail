@@ -108,10 +108,8 @@ class Sender(threading.Thread):
                 report_steps = ReportStep(data)
                 del self.__steps[case.case_id]
                 return report_steps
-            else:
-                return None
-        else:
-            return rep
+            return None
+        return rep
 
     def __worker(self) -> None:
         while True:

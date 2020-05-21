@@ -1,4 +1,3 @@
-import warnings
 from typing import Any, Iterable, Iterator, Optional, TypeVar
 
 import pytest
@@ -8,9 +7,7 @@ __all__ = ["case", "steps_case", "param", "params"]
 ParameterSet = TypeVar("ParameterSet")
 
 
-def case(case_id: str, *args):
-    if args:
-        warnings.warn("Case takes only one argument", DeprecationWarning)
+def case(case_id: str):
     return pytest.mark.pytestrail(case_id)
 
 
