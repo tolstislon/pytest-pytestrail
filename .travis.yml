@@ -1,4 +1,4 @@
-dist: xenial
+dist: bionic
 language: python
 
 env:
@@ -13,9 +13,10 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
+  - "3.9-dev"
 install:
   - pip install $PYTEST_VERSION
-  - pip install pytest-cov==2.8.1
+  - pip install pytest-cov==2.9.0
   - pip install responses==0.10.14
   - pip install -e .
 script:

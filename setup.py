@@ -17,7 +17,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=[
         'pytest>=3.8.0',
-        'testrail-api>=1.6.2'
+        'testrail-api>=1.6.4'
     ],
     include_package_data=True,
     use_scm_version={"write_to": "pytest_pytestrail/__version__.py"},
@@ -46,6 +46,7 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: Implementation',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
