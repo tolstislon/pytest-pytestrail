@@ -5,10 +5,10 @@ verify_ssl = true
 
 [dev-packages]
 responses = "==0.10.14"
-pytest = ">=5.4.2"
-testrail-api = ">=1.6.2"
+pytest = "==5.4.3"
+testrail-api = "==1.6.4"
 black = "==19.10b0"
-pytest-cov = "==2.8.1"
+pytest-cov = "==2.9.0"
 
 [packages]
 
