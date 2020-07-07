@@ -17,7 +17,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=[
         'pytest>=3.8.0',
-        'testrail-api>=1.6.4'
+        'testrail-api>=1.7.0'
     ],
     include_package_data=True,
     use_scm_version={"write_to": "pytest_pytestrail/__version__.py"},
