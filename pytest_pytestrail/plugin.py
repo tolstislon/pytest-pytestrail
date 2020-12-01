@@ -121,7 +121,7 @@ class PyTestRail:
 
     def _selection_item(self, mark, case_id: int) -> bool:
         # TODO Implement selection
-        if not mark or case_id not in self.case_ids:
+        if (not mark or case_id not in self.case_ids) and self._config.no_decorator_skip:
             return False
         return True
 
