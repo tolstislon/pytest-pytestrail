@@ -88,7 +88,7 @@ class Config:
 
     @lru_cache(16)
     def get_case_ids(self, test_run_id: int) -> List[int]:
-        return [i["case_id"] for i in self.api.tests.get_tests(test_run_id)]
+        return [i["case_id"] for i in self.api.tests.get_tests(test_run_id)['tests']]
 
     def _format_string(self, value: str) -> str:
         try:
